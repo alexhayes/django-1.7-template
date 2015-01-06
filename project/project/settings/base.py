@@ -244,3 +244,18 @@ WSGI_APPLICATION = '%s.wsgi.application' % SITE_NAME
 # END WSGI CONFIGURATION
 
 TEST_RUNNER = 'discover_runner.DiscoverRunner'
+
+# Redis settings
+REDIS_SOCKET = '/var/run/redis/redis.sock'
+
+# Celery settings - http://celery.readthedocs.org/en/latest/configuration.html
+BROKER_URL = 'amqp://app:s3cr3t@localhost:5672/app'
+CELERY_RESULT_BACKEND = 'redis+socket://%s' % REDIS_SOCKET
+
+# Django Cache settings - 
+CACHES = {
+    'default': {
+        'BACKEND': 'redis_cache.RedisCache',
+        'LOCATION': REDIS_SOCKET,
+    },
+}
